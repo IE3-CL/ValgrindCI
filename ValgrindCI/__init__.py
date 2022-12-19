@@ -58,6 +58,12 @@ def main():
     errors_total = data.get_num_errors()
     if args.abort_on_errors and errors_total != 0:
         print("{} errors reported by Valgrind - Abort".format(errors_total))
+        try:
+            with open(args.xml_file, 'r') as f:
+                for line in f:
+                    print(line.replace('\n', ''))
+        except:
+            pass
         sys.exit(1)
 
     if args.output_dir:
