@@ -72,9 +72,27 @@ def main():
         report = Report(data)
         print(report.summary())
         if errors_total != 0:
+            import hashlib
+            sups = []
+            supshash = []
             try:
+                sup = False
                 with open(args.xml_file, 'r') as f:
                     for line in f:
-                        print(line.replace('\n', ''))
+                        if '<![CDATA[' in line:
+                            sup = True
+                        if sup and ']]>' in line:
+                            sup = False
+                            if len(sups) > 0:
+                                sh = hashlib.md5(''.join(sups)).hexdigest() # Hash
+                                if sh not in supshash:
+                                    supshash.append(sh)
+                                    if len(supshash) == 1:
+                                        print("Suppressions:")
+                                    for j in sups:
+                                        print(j.replace('\n', ''))
+                            sups = [] # Clean
+                        if sup:
+                            sups.append(line)
             except:
                 pass
