@@ -81,16 +81,18 @@ def main():
                     for line in f:
                         if '<![CDATA[' in line:
                             sup = True
+                            continue
                         if sup and ']]>' in line:
                             sup = False
                             if len(sups) > 0:
-                                sh = hashlib.md5(''.join(sups)).hexdigest() # Hash
+                                sh = hashlib.md5(''.join(sups).encode('utf-8')).hexdigest() # Hash
                                 if sh not in supshash:
                                     supshash.append(sh)
                                     if len(supshash) == 1:
                                         print("Suppressions:")
                                     for j in sups:
                                         print(j.replace('\n', ''))
+                                    print('')
                             sups = [] # Clean
                         if sup:
                             sups.append(line)
