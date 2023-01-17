@@ -46,3 +46,8 @@ jobs:
           make
           valgrind --tool=memcheck --xml=yes --xml-file=test.xml ./test_basic
           ctest --output-on-failure
+
+  semgrep:
+    uses: ppizarror/workflow-actions/.github/workflows/semgrep.yml@master
+    secrets:
+      SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
