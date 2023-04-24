@@ -20,7 +20,10 @@ import os
 import shutil
 from typing import Any, Dict, List, Optional, Tuple
 
-from jinja2 import Environment, PackageLoader, select_autoescape
+try:
+    from jinja2 import Environment, PackageLoader, select_autoescape
+except:
+    pass
 
 from .parse import ValgrindData
 
