@@ -19,8 +19,6 @@
 import os.path
 from typing import List, Optional
 
-import defusedxml.ElementTree as et
-
 
 class Error:
     def __init__(self, tag) -> None:
@@ -120,6 +118,7 @@ class ValgrindData:
         self._source_dir: Optional[str] = None
 
     def parse(self, xml_file: str) -> None:
+        import defusedxml.ElementTree as et
         root = et.parse(xml_file).getroot()
         for error_tag in root.findall("error"):
             self.errors.append(Error(error_tag))
