@@ -30,9 +30,9 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip mypy
-          pip install setuptools wheel
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          python -m pip install -U pip mypy
+          python -m pip install setuptools wheel
+          if [ -f requirements.txt ]; then python -m pip install -r requirements.txt; fi
 
       - name: Type checking with mypy
         run: mypy --ignore-missing-imports ValgrindCI/*.py
@@ -41,7 +41,7 @@ jobs:
         run: |
           touch ValgrindCI/py.typed
           python setup.py bdist_wheel
-          pip install ValgrindCI --no-index -f dist/ValgrindCI*.whl
+          python -m pip install ValgrindCI --no-index -f dist/ValgrindCI*.whl
 
       - name: Test
         working-directory: build
